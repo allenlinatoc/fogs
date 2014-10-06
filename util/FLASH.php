@@ -13,6 +13,10 @@
  */
 class FLASH {
     
+    // Flash types
+    const SUCCESS = 'PROMPT';
+    const ERROR = 'ERROR';
+    
     public static $FLASH_SESS_KEY = '_flash';           # Session key for flash contents
     public static $FLASH_DEDICATION_KEY = '_flash_page_dedication'; # Session key for FLASH page dedication
     public static $FLASH_SESS_TYPE = '_flash_type';     # Session key for flash type
@@ -23,16 +27,30 @@ class FLASH {
      * The main function to be called when showing Flashes
      */
     public static function Initialize() {
-        if (self::__hasFlashes()) {
-            echo '<div class="container">';
-            echo '<div class="container-fluid main-placeholder flash-'.strtolower(self::__getType()).'">';
-            echo '<img class="flash-icon" src="web+/site/img/'.strtolower(self::__getType()).'.png">&nbsp;&nbsp;<font class="flash-title">'
-                    . (strtoupper(self::__getType())=='PROMPT' ? self::$Flashes[0] : self::__getCount() .' error'. (self::__getCount() > 1 ? 's':'') .' occured')
-                    .'</font><br>';
-            if (strtoupper(self::__getType()) == 'ERROR') {
-                self::printListedFlashes();
-            }
-            echo '</div>';
+        if ( self::__hasFlashes() )
+        {
+            // values processing
+            $type = strtoupper(self::__getType())==self::SUCCESS ? 'success':'danger';
+            $title = strtoupper(self::__getType())==self::SUCCESS ? 
+                    ( 'Success' )
+                  : ( self::__getCount() .' error'. (self::__getCount() > 1 ? 's':'') .' occured');
+            $body = strtoupper(self::__getType()) == self::SUCCESS ?
+                    ( self::$Flashes[0] )
+                  : ( null );
+            
+            // output
+            echo '<div id="flash_spacer"><br><br><br></div>';
+            echo '<div class="container" id="flash_panel">';
+            echo '  <div class="panel panel-'.$type.'">';
+            echo '      <div class="panel-heading container-fluid row-fluid">';
+            echo '          <div class="panel-title col-lg-10 col-md-10 col-sm-10 col-xs-10">'.$title.'</div>';
+            echo '          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2" align="right">'
+                                . '<span class="glyphicon glyphicon-remove-circle btn" onclick="dismissFlashpanel();"></span></div>';
+            echo '      </div>';
+            echo '      <div class="panel-body">';
+            echo            (is_null($body) ? self::printListedFlashes() : $body);
+            echo '      </div>';
+            echo '  </div>';
             echo '</div>';
         }
     }
@@ -42,9 +60,9 @@ class FLASH {
      * @param String $flash The flash message you want to add
      * @param String/Array $target_page Page/pages where this Flash is dedicated
      * @param String $type The type of message, could be "PROMPT" or "ERROR" (or "EMPTY")
-     * @param boolean $is_clearfirst Optional boolean value if existing flashes should be truncated first.
+     * @param boolean $is_clearfirst [false] Optional boolean value if existing flashes should be truncated first.
      */
-    public static function addFlash($flash, $target_page, $type = 'PROMPT', $is_clearfirst = false) {
+    public static function addFlash($flash, $target_page, $type = self::SUCCESS, $is_clearfirst = false) {
         if ($is_clearfirst) {
             self::clearFlashes();
         }
@@ -70,8 +88,8 @@ class FLASH {
      * @param String $type The type of message, could be "PROMPT" or "ERROR" (or "EMPTY")
      * @param boolean $is_clearfirst Optional boolean value if existing flashes should be truncated first.
      */
-    public static function addFlashes($flashes, $target_page, $type = 'PROMPT', $is_clearfirst = false) {
-        if (strtoupper(trim($type))=='PROMPT' && count($flashes) > 1) {
+    public static function addFlashes($flashes, $target_page, $type = self::SUCCESS, $is_clearfirst = false) {
+        if (strtoupper(trim($type))==self::SUCCESS && count($flashes) > 1) {
             die('You can only add 1 flash for prompt type of flashes!');
             return;
         }
@@ -93,7 +111,7 @@ class FLASH {
      */
     public static function checkAndAdd($a_msg_condition, $success_message, $success_page, $error_page, $is_clearfirst = false) {
         $IS_ERROR_MODE = false;
-        $TYPE = 'PROMPT';
+        $TYPE = self::SUCCESS;
         if ($is_clearfirst) {
             self::clearFlashes();
         }
@@ -105,7 +123,7 @@ class FLASH {
                 // Check for occurence of an error
                 if (current($a_msg_condition) && !$IS_ERROR_MODE) {
                     $IS_ERROR_MODE = true;
-                    $TYPE = 'ERROR';
+                    $TYPE = self::ERROR;
                 }
                 
                 # Adds an error flash message if TRUE and ERROR_MODE
@@ -120,7 +138,7 @@ class FLASH {
         // If not error mode, consider this flash instance as PROMPT
         //  therefore adding $success_message as a Flash message
         if (!$IS_ERROR_MODE) {
-            $TYPE = 'PROMPT';
+            $TYPE = self::SUCCESS;
             self::addFlash($success_message, $success_page, $TYPE, true);
         }
         

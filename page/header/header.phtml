@@ -7,9 +7,8 @@
         <meta name="description" content="Your description falls here">
         <meta name="author" content="Allen Linatoc, Imari Elanor Malabanan, Patricia Mae Marasigan">
 
-        <!-- Bootstrap components -->
-        <script type="text/javascript" src="web+/bootstrap/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="web+/bootstrap/css/bootstrap.css">
+        <link rel="stylesheet" href="web+/bootstrap/css/bootstrap-theme.css">
 
         <!-- Site components -->
         <link rel="stylesheet" href="web+/site/css/default.css">
@@ -18,10 +17,27 @@
 
         <title><?php echo PARAMS::Get('header_title'); ?></title>
     </head>
-    <body class="row-fluid">
-        <header class="row-fluid">
+    <body role="document">
+        <header class="navbar navbar-default navbar-fixed-top" role="navigation">
             <!-- Put your HEADER Contents here!!! -->
-            <div style="background-color:#13007D; color:#fff; padding:3%;">
-                Your header is here!
+            <div class="container">
+                <!-- Title stuff here -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">FOGS</a>
+                </div>
+                
+                <!-- Navigation stuff here -->
+                <?php
+                Index::__IncludeFiles('page/_includes', [
+                    'nav_user.phtml'
+                ]);
+                ?>
+                
             </div>
         </header>

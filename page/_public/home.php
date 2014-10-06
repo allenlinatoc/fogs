@@ -6,4 +6,11 @@
  * and open the template in the editor.
  */
 
+FLASH::addFlashes(array(
+    'It\'s a matter of time!',
+    'You got invalid email!',
+    'Fuck you boy!'
+), Index::__GetPage(), FLASH::ERROR, true);
+//FLASH::clearFlashes();
+
 ?>
