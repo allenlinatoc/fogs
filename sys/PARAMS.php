@@ -304,14 +304,46 @@ class PARAMS
         return self::PARAM_KEY . strtoupper($page);
     }
     
-    public static function __HasParameters($page=self::PAGE_GLOBAL)
+    /**
+     * Check if this page has parameters
+     * @param string $page [PAGE_GLOBAL]
+     * @param Array $a_parameternames [array()]
+     * @return boolean
+     */
+    public static function __HasParameters($page=self::PAGE_GLOBAL, $a_parameternames=array())
     {
         if (self::Exists($page))
         {
             $paramKey = self::__GetQualifiedKey($page);
-            if ( is_array($_SESSION[$paramKey]) )
+            if ( array_key_exists($paramKey, $_SESSION) )
             {
-                return count($_SESSION[$paramKey]);
+                if ( is_array($_SESSION[$paramKey]) )
+                {
+                    if ( count($a_parameternames)==0 )
+                    {
+                        return count($_SESSION[$paramKey]);
+                    }
+                    else {
+                        $paramNames = array();
+                        // build the existing parameter names first
+                        foreach ( $_SESSION[$paramKey] as $name=>$value )
+                        {
+                            array_push($paramNames, $name);
+                        }
+                        // then, search for existence of each supplied paramenter names
+                        foreach ( $a_parameternames as $name )
+                        {
+                            if ( array_search($name, $paramNames)===FALSE )
+                            {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
+                }
+            }
+            else {
+                return false;
             }
         }
         return false;
@@ -326,9 +358,9 @@ class PARAMS
         {
             echo $x.' >> '.print_r($_SESSION[$paramKey][key($_SESSION[$paramKey])], true).'<br>';
         }
-        if ($is_includepageparams)
+        $paramKey = self::__GetQualifiedKey(Index::__GetPage());
+        if ($is_includepageparams && isset($_SESSION[$paramKey]))
         {
-            $paramKey = self::__GetQualifiedKey(Index::__GetPage());
             echo '<b>Page ('.Index::__GetPage().') params</b><br>';
             for ( $x=0; $x<count($_SESSION[$paramKey]); $x++,next($_SESSION[$paramKey]) )
             {
