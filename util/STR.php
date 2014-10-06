@@ -23,7 +23,7 @@ final class STR {
      * @return boolean
      */
     public static function __HasPunct($string, $is_includespaces = false) {
-        return ctype_punct($string) && ($is_includespaces ? self::__HasSpaces($string) : true);
+        return !ctype_alnum($string) && ($is_includespaces ? self::__HasSpaces($string) : true);
     }
     
     /**
