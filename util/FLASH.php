@@ -27,14 +27,14 @@ class FLASH {
      * The main function to be called when showing Flashes
      */
     public static function Initialize() {
-        if ( self::__hasFlashes() )
+        if ( self::__HasFlashes() )
         {
             // values processing
-            $type = strtoupper(self::__getType())==self::SUCCESS ? 'success':'danger';
-            $title = strtoupper(self::__getType())==self::SUCCESS ? 
+            $type = strtoupper(self::__GetType())==self::SUCCESS ? 'success':'danger';
+            $title = strtoupper(self::__GetType())==self::SUCCESS ? 
                     ( 'Success' )
-                  : ( self::__getCount() .' error'. (self::__getCount() > 1 ? 's':'') .' occured');
-            $body = strtoupper(self::__getType()) == self::SUCCESS ?
+                  : ( self::__GetCount() .' error'. (self::__GetCount() > 1 ? 's':'') .' occured');
+            $body = strtoupper(self::__GetType()) == self::SUCCESS ?
                     ( self::$Flashes[0] )
                   : ( null );
             
@@ -62,7 +62,7 @@ class FLASH {
      * @param String $type The type of message, could be "PROMPT" or "ERROR" (or "EMPTY")
      * @param boolean $is_clearfirst [false] Optional boolean value if existing flashes should be truncated first.
      */
-    public static function addFlash($flash, $target_page, $type = self::SUCCESS, $is_clearfirst = false) {
+    public static function AddFlash($flash, $target_page, $type = self::SUCCESS, $is_clearfirst = false) {
         if ($is_clearfirst) {
             self::clearFlashes();
         }
@@ -71,7 +71,7 @@ class FLASH {
             die('<br>Flash message can never be empty!');
             return false;
         }
-        self::__hasFlashes();
+        self::__HasFlashes();
         array_push($_SESSION[self::$FLASH_SESS_KEY], $flash);
         
         # -- Assign Content type
@@ -88,7 +88,7 @@ class FLASH {
      * @param String $type The type of message, could be "PROMPT" or "ERROR" (or "EMPTY")
      * @param boolean $is_clearfirst Optional boolean value if existing flashes should be truncated first.
      */
-    public static function addFlashes($flashes, $target_page, $type = self::SUCCESS, $is_clearfirst = false) {
+    public static function AddFlashes($flashes, $target_page, $type = self::SUCCESS, $is_clearfirst = false) {
         if (strtoupper(trim($type))==self::SUCCESS && count($flashes) > 1) {
             die('You can only add 1 flash for prompt type of flashes!');
             return;
@@ -97,7 +97,7 @@ class FLASH {
             self::clearFlashes();
         }
         foreach ($flashes as $flash) {
-            self::addFlash($flash, $target_page, $type);
+            self::AddFlash($flash, $target_page, $type);
         }
     }
     
@@ -109,7 +109,7 @@ class FLASH {
      * @param String $error_page The redirection page when error
      * @param Boolean $is_clearfirst Boolean value if existing flashes shoud be cleared first
      */
-    public static function checkAndAdd($a_msg_condition, $success_message, $success_page, $error_page, $is_clearfirst = false) {
+    public static function CheckAndAdd($a_msg_condition, $success_message, $success_page, $error_page, $is_clearfirst = false) {
         $IS_ERROR_MODE = false;
         $TYPE = self::SUCCESS;
         if ($is_clearfirst) {
@@ -128,7 +128,7 @@ class FLASH {
                 
                 # Adds an error flash message if TRUE and ERROR_MODE
                 if ($IS_ERROR_MODE && current($a_msg_condition)) {
-                    self::addFlash(key($a_msg_condition), $error_page, $TYPE);
+                    self::AddFlash(key($a_msg_condition), $error_page, $TYPE);
                 }
                 $x++;
                 next($a_msg_condition);
@@ -139,7 +139,7 @@ class FLASH {
         //  therefore adding $success_message as a Flash message
         if (!$IS_ERROR_MODE) {
             $TYPE = self::SUCCESS;
-            self::addFlash($success_message, $success_page, $TYPE, true);
+            self::AddFlash($success_message, $success_page, $TYPE, true);
         }
         
     }
@@ -157,15 +157,15 @@ class FLASH {
      * Counts the current Flash contents
      * @return Integer
      */
-    public static function __getCount() {
-        return count(self::__getFlashes());
+    public static function __GetCount() {
+        return count(self::__GetFlashes());
     }
 
     /**
      * Gets the Flash contents
      * @return Array
      */
-    public static function __getFlashes() {
+    public static function __GetFlashes() {
         if (!array_key_exists(self::$FLASH_SESS_KEY, $_SESSION)) {
             $_SESSION[self::$FLASH_SESS_KEY] = array();
         }
@@ -181,8 +181,8 @@ class FLASH {
      * Gets the current FLASHES type
      * @return String
      */
-    public static function __getType() {
-        self::__hasFlashes();
+    public static function __GetType() {
+        self::__HasFlashes();
         return strtoupper($_SESSION[self::$FLASH_SESS_TYPE]);
     }
 
@@ -190,10 +190,10 @@ class FLASH {
      * Checks for Flashes existence
      * @return Boolean
      */
-    public static function __hasFlashes() {
+    public static function __HasFlashes() {
         $contains = false;
         if (array_key_exists(self::$FLASH_SESS_KEY, $_SESSION) && array_key_exists(self::$FLASH_SESS_TYPE, $_SESSION)) {
-            $contains = count(self::__getFlashes()) > 0;
+            $contains = count(self::__GetFlashes()) > 0;
         }
         if (!$contains) {
             $_SESSION[self::$FLASH_SESS_KEY] = array();
@@ -227,7 +227,7 @@ class FLASH {
      */
     public static function printListedFlashes() {
         echo '<ul>';
-        foreach(self::__getFlashes() as $flashmessage) {
+        foreach(self::__GetFlashes() as $flashmessage) {
             echo '<li>' . $flashmessage . '</li>';
         }
         echo '</ul>';
