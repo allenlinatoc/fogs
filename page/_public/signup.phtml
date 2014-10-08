@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="container-fluid jumbotron">
+        <br>
+        <h3>Sign up</h3>
+        <div class="row-fluid">
+            <form method="post" role="form">
+                <div class="input-group center col-lg-7 col-md-7">
+                    <span class="input-group-addon">Username</span>
+                    <input 
+                        type=       "text"
+                        name=       "postUsername"
+                        class=      "form-control"
+                        value=      "<?php echo $postUsername; ?>"
+                        required
+                        readonly>
+                </div>
+                <br>
+                <div class="input-group center col-lg-7 col-md-7">
+                    <span class="input-group-addon">Password</span>
+                    <input 
+                        type=       "password"
+                        name=       "postPassword"
+                        class=      "form-control"
+                        value=      "<?php echo $postPassword; ?>"
+                        required
+                        readonly>
+                </div>
+                <br>
+                Repeat password
+                <div class="input-group center col-lg-7 col-md-7">
+                    <input 
+                        type=       "password"
+                        name=       "postPassword2"
+                        class=      "form-control"
+                        maxlength=  "75"
+                        autofocus>
+                </div>
+                <br>
+                <input type="submit" class="btn btn-primary btn-sm" value="Register">
+                <input type="button" class="btn btn-warning btn-sm" value="Cancel" onclick="javascript:window.history.back();">
+            </form>
+        </div>
+    </div>
+</div>
