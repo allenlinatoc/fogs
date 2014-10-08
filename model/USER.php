@@ -79,7 +79,7 @@ final class USER {
      *      otherwise, returns what was specified (e.g. USER::USERNAME, etc.)
      * @return mixed
      */
-    public static function __Get($infokey=null)
+    public static function Get($infokey=null)
     {
         if ( $infokey===null )
         {
