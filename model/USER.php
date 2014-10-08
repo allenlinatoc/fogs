@@ -72,6 +72,7 @@ final class USER {
         }
     }
     
+    
     /**
      * Gets an information from user's login session
      * @param string $infokey [null] If null, returns all user infos in array,
