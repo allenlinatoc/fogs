@@ -21,7 +21,7 @@ if ( DATA::__HasPostData(['postPassword2']) )
         $sql
                 ->InsertInto('users', [ 'username','password' ])
                 ->Values(array(
-                    $postUsername, $postPassword
+                    $postUsername, USER::Encryptor($postPassword, 'ENCRYPT')
                 ), [ 0,1 ]);
         $sql->Execute();
         if ( $sql->__IsSuccess() )
