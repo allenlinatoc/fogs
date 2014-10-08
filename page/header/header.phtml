@@ -29,14 +29,17 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">FOGS</a>
+                    <a class="navbar-brand" href="<?php echo UI::GetPageUrl('home') ?>">FOGS</a>
                 </div>
                 
                 <!-- Navigation stuff here -->
                 <?php
-                Index::__IncludeFiles('page/_includes', [
-                    'nav_user.phtml'
-                ]);
+                if ( USER::__IsLoggedIn() )
+                {
+                    Index::__IncludeFiles('page/_includes', [
+                        'nav_user.phtml'
+                    ]);
+                }
                 ?>
                 
             </div>
