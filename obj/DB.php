@@ -364,21 +364,35 @@ class DB {
     # Static functions ---------------------------------------------------------
 
     /**
+     * Returns the row count of given query specification
+     * @param string $tablename Table name
+     * @param Array $a_specifications Array of condition strings
+     * @return int
+     */
+    public static function __getRowCount($tablename, $a_specifications=array())
+    {
+        return count(self::__getRecord($tablename, $a_specifications));
+    }
+    
+    /**
      * Returns an array of Table rows from given conditional specifications.
      * @param string $tablename The name of the target table
      * @param Array $a_specifications Linear array of LOGICAL CONDITIONS string, 
      *      each spec is separated by AND
      * @return Array(assoc)
      */
-    public static function __getRecord($tablename, $a_specifications) {
+    public static function __getRecord($tablename, $a_specifications=array()) {
         $mysql = new DB();
         $mysql->Select()->From($tablename);
         // build where string
-        $str_where = '';
-        for ($x=0; $x < count($a_specifications); $x++) {
-            $str_where .= $a_specifications[$x] . ($x < count($a_specifications)-1 ? ' AND ' : '');
+        if ( count($a_specifications)>0 )
+        {
+            $str_where = '';
+            for ($x=0; $x<count($a_specifications); $x++) {
+                $str_where .= $a_specifications[$x] . ($x < count($a_specifications)-1 ? ' AND ' : '');
+            }
+            $mysql->Where($str_where);
         }
-        $mysql->Where($str_where);
         return $mysql->Query();
     }
     
