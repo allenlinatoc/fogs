@@ -75,14 +75,20 @@ final class DATA {
      * @param String $datakey The key of data to be fetched from $_GET
      * @param Boolean $is_trimspaces Boolean value whether left-right trailing spaces should be trimmed out
      * @param Boolean $is_striphtml Boolean value whether HTML tags should be stripped out
+     * @param int $filter_mode [FILTER_DEFAULT] Mode of data will be filtered
      * @param Boolean|null $is_tolower True will make LowerCase, otherwise, UpperCase, NULL makes it do nothing
-     * @return Mixed|null
+     * @return Mixed|null The requested value. NULL if key doesn't exist, FALSE if filter failed
      */
-    public static function __GetGET($datakey, $is_trimspaces = false, $is_striphtml = false, $is_tolower = null) {
+    public static function __GetGET($datakey, $is_trimspaces = false, $is_striphtml = false, $filter_mode=FILTER_DEFAULT, $is_tolower = null) {
         if (!array_key_exists($datakey, $_GET)) {
             return null;
         }
-        $data = $_GET[$datakey];
+        $data = filter_input(INPUT_GET, $datakey, $filter_mode);
+        if ( $data===FALSE )
+        {
+            return false;
+        }
+        
         if ($is_striphtml) {
             $data = strip_tags($data);
         }
@@ -131,14 +137,20 @@ final class DATA {
      * @param String $datakey The key of data to be fetched from $_POST
      * @param Boolean $is_trimspaces Boolean value whether left-right trailing spaces should be trimmed out
      * @param Boolean $is_striphtml Boolean value whether HTML tags should be stripped out
+     * @param int $filter_mode [FILTER_DEFAULT] Mode of data will be filtered
      * @param Boolean|null $is_tolower True will make LowerCase, otherwise, UpperCase, NULL makes it do nothing
-     * @return Mixed|null
+     * @return Mixed|null The requested value. NULL if key doesn't exist, FALSE if filter failed
      */
-    public static function __GetPOST($datakey, $is_trimspaces = false, $is_striphtml = false, $is_tolower = null) {
+    public static function __GetPOST($datakey, $is_trimspaces = false, $is_striphtml = false, $filter_mode=FILTER_DEFAULT, $is_tolower = null) {
         if (!array_key_exists($datakey, $_POST)) {
             return null;
         }
-        $data = $_POST[$datakey];
+        $data = filter_input(INPUT_GET, $datakey, $filter_mode);
+        if ( $data===FALSE )
+        {
+            return false;
+        }
+        
         if ($is_striphtml) {
             $data = strip_tags($data);
         }
