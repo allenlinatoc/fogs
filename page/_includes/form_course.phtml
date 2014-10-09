@@ -1,0 +1,23 @@
+<div class="panel panel-primary" id="panel_course">
+    <div class="panel-heading">
+        <span class="panel-title"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;My courses</span>
+    </div>
+    <div class="panel-body">
+        <form method="post" role="form">
+            <h4><label class="label label-default">Course name</label></h4>
+            <div class="input-group">
+                <input type="text" name="postCoursename" class="form-control" maxlength="50" value="<?php echo $postCoursename ?>" required autofocus>
+                <span class="input-group-btn">
+                    <?php
+                    UI::Button('Submit', 'submit', 'btn btn-primary');
+                    UI::Button('Cancel', 'button', 'btn btn-danger'
+                            , UI::GetPageUrl(Index::__GetPage()
+                                    , array(
+                                        'MODE' => 'REQ_CANCEL'
+                                    )));
+                    ?>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
