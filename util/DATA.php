@@ -425,6 +425,22 @@ final class DATA {
         return $is_somethingcleared;
     }
     
+    public static function DestroySession($a_keys=array())
+    {
+        foreach ( $_SESSION as $key=>$value )
+        {
+            $proceed = true;
+            if ( count($a_keys)>0 )
+            {
+                $proceed = ARRAYS::__HasValue($key, $a_keys, true);
+            }
+            while ( $proceed && isset($_SESSION[$key]) )
+            {
+                unset($_SESSION[$key]);
+            }
+        }
+    }
+    
     /**
      * 100% deletes and shreds all intents in this page
      */
