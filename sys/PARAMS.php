@@ -25,12 +25,22 @@ class PARAMS
      * Converts all URL 
      * @param type $is_refresh
      */
-    public static function AcceptURLQueries($a_allowednames=array(), $is_refresh=true)
+    public static function AcceptURLQueries($is_refresh=true, $a_allowednames=array(), $a_blocknames=array())
     {
         $had_something = false;
-        foreach($_GET as $key => $value)
+        $_GETDATA = DATA::__ALL_GET();
+        foreach($_GETDATA as $key => $value)
         {
-            ARRAYS::SearchSubstring($str_value, $a_haystack);
+            // if defined, then only allowed names will be accepted
+            if ( count($a_allowednames)>0 && !ARRAYS::__HasValue($key, $a_allowednames) )
+            {
+                continue;
+            }
+            // if defined, then only disallowed names will not be accepted
+            if ( count($a_blocknames)>0 && ARRAYS::__HasValue($key, $a_blocknames) )
+            {
+                continue;
+            }
             self::Create($key, $value, self::PAGE_SELF);
             if ( !$had_something )
             {
@@ -165,7 +175,12 @@ class PARAMS
         return false;
     }
     
-    public static function DeleteParameterByPage($paramName, $page=self::PAGE_GLOBAL)
+    /**
+     * Delete parameter by page
+     * @param string $paramName
+     * @param const $page [PAGE_SELF]
+     */
+    public static function DeleteParameterByPage($paramName, $page=self::PAGE_SELF)
     {
         if ( self::Exists($page) )
         {
@@ -181,6 +196,33 @@ class PARAMS
                     }
                     while ( self::ExistsParam($paramName, $page) );
                 }
+            }
+        }
+    }
+    
+    /**
+     * Delete multiple parameters in certain page
+     * @param Array $a_parameters Array of parameter names
+     * @param const $page [PAGE_SELF]
+     */
+    public static function DeleteParametersByPage($a_parameters, $page=self::PAGE_SELF)
+    {
+        foreach ( $a_parameters as $parameter )
+        {
+            self::DeleteParameterByPage($parameter, $page);
+        }
+    }
+    
+    /**
+     * Destroy all parameters internationally, lols
+     */
+    public static function DestroyEverything()
+    {
+        foreach ( $_SESSION as $key=>$value )
+        {
+            while ( isset($_SESSION[$key]) && strpos($key, self::PARAM_KEY)!==FALSE ) {
+                echo 'Deleting '.$key.'<br>';
+                unset($_SESSION[$key]);
             }
         }
     }
@@ -291,7 +333,7 @@ class PARAMS
         return null;
     }
     
-    protected static function __GetQualifiedKey($page=self::PAGE_GLOBAL)
+    public static function __GetQualifiedKey($page=self::PAGE_GLOBAL)
     {
         if ( is_null($page) )
         {
@@ -321,7 +363,7 @@ class PARAMS
                 {
                     if ( count($a_parameternames)==0 )
                     {
-                        return count($_SESSION[$paramKey]);
+                        return count($_SESSION[$paramKey]) > 0;
                     }
                     else {
                         $paramNames = array();
