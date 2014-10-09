@@ -11,6 +11,10 @@ class Index {
 
     public function __construct() {
         # ---- [BEGIN :: STANDARD PROCEDURES, do not modify]
+        // ---- always enable "Garbage collection"
+        if ( !gc_enabled() ) {
+            gc_enable();
+        }
         // ---- error reporting - all errors for development (ensure you have display_errors = On in your php.ini file)
         error_reporting(E_ALL | E_STRICT);
         mb_internal_encoding('UTF-8');
@@ -202,9 +206,14 @@ class Index {
         $HEADER_title = $HEADER_appconfig['WEB_TITLE'];
         $PAGE_TITLES = parse_ini_file(DIR::$CONFIG . 'page-titles.ini');
 
-        if (array_key_exists($this->__GetPage(), $PAGE_TITLES))
+        if ( array_key_exists($this->__GetPage(), $PAGE_TITLES) )
         {
             $HEADER_title = $PAGE_TITLES[$this->__GetPage()];
+        }
+        if ( self::__GetPage()==DIALOG::DIALOG_PAGENAME && DATA::__HasIntentData('DIALOG_OBJECT') )
+        {
+            $dialogObj = DIALOG::ToDialog(DATA::__GetIntent('DIALOG_OBJECT'));
+            $HEADER_title = $dialogObj->DialogTitle;
         }
         PARAMS::Create('header_title', $HEADER_title);
         

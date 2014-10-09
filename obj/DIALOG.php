@@ -133,8 +133,8 @@ class DIALOG {
     public function SetResult($result, $is_readylaunch=false) {
         $this->DialogResult = $result;
         if ($is_readylaunch) {
-            DATA::SetIntent('DIALOG_RESULT', $this->DialogResult);
-            DATA::DeleteIntent('LOCALRESULT'); // verify that no LOCALRESULT intent exists
+            PARAMS::Create('DIALOG_RESULT', $this->DialogResult);
+            PARAMS::DeleteParameter('LOCALRESULT', true); // verify that no LOCALRESULT intent exists
             UI::RedirectTo($this->DialogPagecallback);
         }
     }
@@ -167,8 +167,7 @@ class DIALOG {
             !is_null($this->DialogPagecallback)
         ));
         if ($specs_check==-1) {
-            DATA::openPassage(self::DIALOG_PAGENAME, true, false);
-            DATA::SetIntent('DIALOG_OBJECT', $this);
+            PARAMS::Create('DIALOG_OBJECT', $this, DIALOG::DIALOG_PAGENAME);
             UI::RedirectTo(self::DIALOG_PAGENAME);
         } else {
             ERROR::PromptError('Specs checking failed at index ' . $specs_check, null, null, true);

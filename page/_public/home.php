@@ -13,8 +13,8 @@ if ( USER::__IsLoggedIn() )
 
 if (DATA::__HasPostData())
 {
-    $type = DATA::__GetPOST('postType', true, true, false);
-    $postUsername = DATA::__GetPOST('postUsername', true, true, true);
+    $type = strtoupper(DATA::__GetPOST('postType', true, true));
+    $postUsername = strtolower(DATA::__GetPOST('postUsername', true, true));
     $postPassword = DATA::__GetPOST('postPassword');
     
     FLASH::CheckAndAdd(array(

@@ -1,21 +1,20 @@
 <?php
-if (DATA::__IsPassageOpen()) {
-    DATA::GenerateIntentsFromGET(); // check for GET data extraction
-    # ---- Filterted
-    #
-    if ( !DATA::__HasIntentData('DIALOG_OBJECT')
-            && (DATA::__HasIntentData('DIALOG_OBJECT') ? !is_object(DATA::__GetIntent('DIALOG_OBJECT')) : true) ) {
-        FLASH::AddFlash('You tried to enter an unauthorized page.', 
-                [Index::$DEFAULT_PAGE],
-            'ERROR', TRUE);
-        UI::RedirectTo(Index::$DEFAULT_PAGE);
-    }
-    $dialogObject = DIALOG::ToDialog(DATA::__GetIntent('DIALOG_OBJECT'));
-    if (isset($_SESSION["intent_LOCALRESULT"])) {
-        // DATA::closePassage(Index::__GetPage());
-        $dialogObject->SetResult(intval(DATA::__GetIntent('LOCALRESULT')), true);
-    }
+
+PARAMS::AcceptURLQueries(true, [ 'LOCALRESULT' ]);
+# ---- Filtered
+#
+
+if ( !PARAMS::__HasParameters(PARAMS::PAGE_SELF, [ 'DIALOG_OBJECT' ]) ) {
+    FLASH::AddFlash('You tried to enter an unauthorized page.', 
+            [Index::$DEFAULT_PAGE],
+        'ERROR', TRUE);
+    UI::RedirectTo(Index::$DEFAULT_PAGE);
+}
+$dialogObject = DIALOG::ToDialog(PARAMS::Get('DIALOG_OBJECT', PARAMS::PAGE_SELF));
+if ( PARAMS::__HasParameters(PARAMS::PAGE_SELF, [ 'LOCALRESULT' ]) ) {
+    // DATA::closePassage(Index::__GetPage());
+//        die('May localresult: ' . DATA::__GetIntentSecurely('LOCALRESULT'));
+    $dialogObject->SetResult(intval(PARAMS::Get('LOCALRESULT', PARAMS::PAGE_SELF)), true);
 }
 
-DATA::openPassage(Index::__GetPage(), true, false);
 ?>

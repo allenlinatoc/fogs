@@ -1,0 +1,32 @@
+<?php
+    $formTitle = 'Add new student';
+
+    if ( $MODE=='EDIT' )
+    {
+        $formTitle = 'Edit student';
+    }
+?>
+<div class="row-fluid" id="form_student">
+    <div class="panel panel-primary no-margin">
+        <div class="panel-heading">
+            <span class="panel-title"><?php echo $formTitle ?></span>
+        </div>
+        <div class="panel-body">
+            <form method="post" role="form">
+                <h4><label class="label label-default">Student name</label></h4>
+                <div class="input-group">
+                    <input type="text" name="postStudentname" class="form-control" maxlength="150" value="<?php echo $postStudentname ?>" autofocus>
+                    <span class="input-group-btn">
+                        <?php
+                        UI::Button( ($MODE=='EDIT' ? 'Save':'Submit'), 'submit', 'btn btn-primary');
+                        UI::Button('Cancel', 'button', 'btn btn-danger'
+                                , UI::GetPageUrl(Index::__GetPage(), array(
+                                    'MODE' => 'REQ_CANCEL'
+                                )));
+                        ?>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

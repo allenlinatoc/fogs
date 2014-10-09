@@ -6,6 +6,6 @@
 
 function scrollTo(selector){
     $('html, body').animate({
-            scrollTop: $(selector).offset().top
+            scrollTop: $(selector).offset().top-50
     }, 'slow');
 }

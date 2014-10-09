@@ -185,11 +185,11 @@ class PARAMS
         if ( self::Exists($page) )
         {
             $paramKey = self::__GetQualifiedKey($page);
-            for ( $x=0; $x<count($_SESSION[$paramKey]); $x++,next($_SESSION[$paramKey]) )
+            for ( $x=0,reset($_SESSION[$paramKey]); $x<count($_SESSION[$paramKey]); $x++,next($_SESSION[$paramKey]) )
             {
                 $data = current($_SESSION[$paramKey]);
                 $key = key($_SESSION[$paramKey]);
-                if ( $data['name']===$paramName )
+                if ( $data['name']==$paramName )
                 {
                     do {
                         unset($_SESSION[$paramKey][$key]);
@@ -257,6 +257,15 @@ class PARAMS
         }
     }
     
+    public static function DropParametersFrom($page)
+    {
+        $paramKey = self::__GetQualifiedKey($page);
+        if ( isset($_SESSION[$paramKey]) )
+        {
+            unset($_SESSION[$paramKey]);
+        }
+    }
+    
     /**
      * If there are parameters that exists
      * @param string $page Name of the page where parameters checking will take place
@@ -265,11 +274,7 @@ class PARAMS
     public static function Exists($page=self::PAGE_GLOBAL)
     {
         $paramKey = self::__GetQualifiedKey($page);
-        if ( isset($_SESSION[$paramKey]) )
-        {
-            return true;
-        }
-        return false;
+        return isset($_SESSION[$paramKey]);
     }
     
     /**
@@ -302,6 +307,12 @@ class PARAMS
         return isset($_SESSION[$paramkey]);
     }
     
+    /**
+     * Get the value of certain parameter
+     * @param string $paramName Name of the parameter
+     * @param string $page [PAGE_GLOBAL]
+     * @return mixed
+     */
     public static function Get($paramName, $page=self::PAGE_GLOBAL)
     {
         if ( !self::Exists($page) )
