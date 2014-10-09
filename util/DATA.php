@@ -184,7 +184,7 @@ final class DATA {
         if (!array_key_exists($datakey, $_POST)) {
             return null;
         }
-        $data = filter_input(INPUT_GET, $datakey, $filter_mode);
+        $data = filter_input(INPUT_POST, $datakey, $filter_mode);
         if ( $data===FALSE && $filter_mode!==FILTER_VALIDATE_BOOLEAN )
         {
             return false;
