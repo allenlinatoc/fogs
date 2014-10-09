@@ -10,6 +10,7 @@ final class USER {
     const USER_KEY = '__usersess__';
     
     // info keys
+    const ID = 'id';
     const USERNAME = 'username';
     const PASSWORD = 'password';
     const TIMESTAMP = 'timestamp';
@@ -43,6 +44,8 @@ final class USER {
         if ( self::__IsLoggedIn() )
         {
             unset($_SESSION[self::USER_KEY]);
+            // Garbage all system PARAMETERS
+            PARAMS::DestroyEverything();
         }
     }
     
@@ -64,9 +67,10 @@ final class USER {
         else
         {
             $a_userinfos = array();
-            $a_userinfos['username'] = $username;
-            $a_userinfos['password'] = $encryptpass;
-            $a_userinfos['timestamp'] = time();
+            $a_userinfos[self::ID] = $result[0]['id'];
+            $a_userinfos[self::USERNAME] = $username;
+            $a_userinfos[self::PASSWORD] = $encryptpass;
+            $a_userinfos[self::TIMESTAMP] = time();
             $_SESSION[self::USER_KEY] = $a_userinfos;
             return true;
         }
