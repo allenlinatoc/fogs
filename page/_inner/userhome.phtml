@@ -1,22 +1,25 @@
-        <br>
-        <br>
-        <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <h2>User panel</h2>
-            </div>
-            <div class="col-lg-6 col-md-6" align="right">
-                <br>
-                <div class="btn-group" align="left">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-user"></span>
-                        &nbsp;&nbsp;<?php echo USER::Get(USER::USERNAME) ?>
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="<?php echo UI::GetPageUrl('logout') ?>">Logout</a></li>
-                    </ul>
-                </div>
-            </div>
+<br>
+<br>
+<?php
+Index::__IncludeFiles('page/_includes', [ 'panel_header.phtml' ], false);
+?>
+<hr class="hr-default">
+
+<!-- Main contents here -->
+
+<div class="container">
+    <div class="container-fluid" align="center">
+        <div class="col-lg-6 col-md-6">
+            <ul class="list-group" align="left">
+                <a href="<?php echo UI::GetPageUrl('manage-students') ?>" class="list-group-item">
+                    <span class="badge"><?php echo $count_Students ?></span>
+                    Manage students
+                </a>
+                <a href="<?php echo UI::GetPageUrl('manage-courses') ?>" class="list-group-item">
+                    <span class="badge"><?php echo $count_Courses ?></span>
+                    Manage courses
+                </a>
+            </ul>
         </div>
-        <hr class="hr-default">
-        Haha
+    </div>
+</div>
