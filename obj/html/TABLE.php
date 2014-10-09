@@ -230,7 +230,7 @@ class TABLE {
             echo '<thead><tr>';
             foreach ($this->Columnheaders as $columnHeader) {
                 $td_properties = '';
-                echo '<td ';
+                echo '<th ';
                 # This about generating Header properties
                 if (count($columnHeader) > 0) {
                     do {
@@ -248,7 +248,7 @@ class TABLE {
                 echo strtolower(trim($td_properties)) . '>';
                 echo array_key_exists('CAPTION', $columnHeader) ?
                         ($is_bold ? '<b>' : '') . $columnHeader['CAPTION'] . ($is_bold ? '</b>' : '') : '';
-                echo '</td>';
+                echo '</th>';
             }
             echo '</tr></thead>';
         }
