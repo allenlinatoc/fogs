@@ -1,5 +1,6 @@
 <?php
     $home_class = Index::__GetPage()=='userhome' ? 'active':'';
+    $courses_class = Index::__GetPage()=='manage-courses' ? ' active':'';
     $students_class = Index::__GetPage()=='manage-students' ? 'active':'';
 ?>
 
@@ -8,10 +9,11 @@
     <ul class="nav navbar-nav navbar-right">
         <li class="<?php echo $home_class; ?>">
             <a class="<?php  ?>" href="<?php echo UI::GetPageUrl('home') ?>">Home</a></li>
-        <li class="dropdown">
+        <li class="dropdown<?php echo $courses_class ?>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">My courses <span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default">
                 <li><a href="<?php echo UI::GetPageUrl('course-form') ?>">Create course</a></li>
+                <li><a href="<?php echo UI::GetPageUrl('manage-courses') ?>">Manage courses</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">No existing course</li>
             </ul>
