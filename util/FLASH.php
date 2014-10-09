@@ -60,9 +60,9 @@ class FLASH {
      * @param String $flash The flash message you want to add
      * @param String/Array $target_page Page/pages where this Flash is dedicated
      * @param String $type The type of message, could be "PROMPT" or "ERROR" (or "EMPTY")
-     * @param boolean $is_clearfirst [false] Optional boolean value if existing flashes should be truncated first.
+     * @param boolean $is_clearfirst [true] Optional boolean value if existing flashes should be truncated first.
      */
-    public static function AddFlash($flash, $target_page, $type = self::SUCCESS, $is_clearfirst = false) {
+    public static function AddFlash($flash, $target_page, $type = self::SUCCESS, $is_clearfirst = true) {
         if ($is_clearfirst) {
             self::clearFlashes();
         }
