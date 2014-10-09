@@ -28,6 +28,8 @@ if (DATA::__HasPostData())
         if ( $type=='LOGIN' )
         {
             $loginsucess = USER::Login($postUsername, $postPassword);
+            $sql = new DB();
+            $exists = $sql->__getRowCount('users', [ 'username="'.$postUsername.'"' ]) > 0;
             if ($loginsucess)
             {
                 FLASH::AddFlash('Login success but redirection didn\'t work!', Index::__GetPage(), FLASH::SUCCESS, true);
@@ -35,7 +37,14 @@ if (DATA::__HasPostData())
             }
             else
             {
-                FLASH::AddFlash('Invalid username or password, please try again', Index::__GetPage(), FLASH::ERROR, true);
+                if ( !$exists )
+                {
+                    FLASH::AddFlash('User does not exist, mind signing up?', Index::__GetPage(), FLASH::ERROR, true);
+                }
+                else
+                {
+                    FLASH::AddFlash('Invalid username or password, please try again', Index::__GetPage(), FLASH::ERROR);
+                }
             }
         }
         else if ( $type=='REGISTER' )
