@@ -17,6 +17,45 @@ final class DATA {
     private static $SESS_DATALOCK_TARGETPAGES = 'segaptegrat_kcolatad';
 
     
+    /**
+     * Gets all filtered $_GET data
+     * @param int $filter_mode [FILTER_DEFAULT
+     * @return Array
+     */
+    public static function __ALL_GET($filter_mode=FILTER_DEFAULT)
+    {
+        $result = array();
+        foreach( $_GET as $key=>$value )
+        {
+            $value = filter_input(INPUT_GET, $key, $filter_mode);
+            if ( $value!==FALSE && $filter_mode!==FILTER_VALIDATE_BOOLEAN )
+            {
+                $result[$key] = $value;
+            }
+        }
+        return $result;
+    }
+    
+    
+    /**
+     * Gets all filtered $_POST data
+     * @param int $filter_mode [FILTER_DEFAULT
+     * @return Array
+     */
+    public static function __ALL_POST($filter_mode=FILTER_DEFAULT)
+    {
+        $result = array();
+        foreach( $_POST as $key=>$value )
+        {
+            $value = filter_input(INPUT_POST, $key, $filter_mode);
+            if ( $value!==FALSE && $filter_mode!==FILTER_VALIDATE_BOOLEAN )
+            {
+                $result[$key] = $value;
+            }
+        }
+        return $result;
+    }
+    
     
     /**
      * Bulk check (AND) a set of boolean specifications
@@ -84,7 +123,7 @@ final class DATA {
             return null;
         }
         $data = filter_input(INPUT_GET, $datakey, $filter_mode);
-        if ( $data===FALSE )
+        if ( $data===FALSE && $filter_mode!==FILTER_VALIDATE_BOOLEAN )
         {
             return false;
         }
@@ -146,7 +185,7 @@ final class DATA {
             return null;
         }
         $data = filter_input(INPUT_GET, $datakey, $filter_mode);
-        if ( $data===FALSE )
+        if ( $data===FALSE && $filter_mode!==FILTER_VALIDATE_BOOLEAN )
         {
             return false;
         }
