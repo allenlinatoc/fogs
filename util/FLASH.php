@@ -39,8 +39,8 @@ class FLASH {
                   : ( null );
             
             // output
-            echo '<div id="flash_spacer"><br><br><br></div>';
-            echo '<div class="container" id="flash_panel">';
+//            echo '<div id="flash_spacer"><br><br><br></div>';
+            echo '<div class="container-fluid panel-container" id="flash_panel">';
             echo '  <div class="panel panel-'.$type.'">';
             echo '      <div class="panel-heading container-fluid row-fluid">';
             echo '          <div class="panel-title col-lg-10 col-md-10 col-sm-10 col-xs-10">'.$title.'</div>';

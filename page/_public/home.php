@@ -4,6 +4,11 @@
 $postUsername = '';
 $postPassword = '';
 
+// redirect "logged-in users" to User panel
+if ( USER::__IsLoggedIn() )
+{
+    UI::RedirectTo('userhome');
+}
 
 
 if (DATA::__HasPostData())
@@ -26,7 +31,7 @@ if (DATA::__HasPostData())
             if ($loginsucess)
             {
                 FLASH::AddFlash('Login success but redirection didn\'t work!', Index::__GetPage(), FLASH::SUCCESS, true);
-                UI::RedirectTo('user-home');
+                UI::RedirectTo('userhome');
             }
             else
             {

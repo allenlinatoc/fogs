@@ -328,7 +328,7 @@ class PARAMS
                         // build the existing parameter names first
                         foreach ( $_SESSION[$paramKey] as $name=>$value )
                         {
-                            array_push($paramNames, $name);
+                            array_push($paramNames, $value['name']);
                         }
                         // then, search for existence of each supplied paramenter names
                         foreach ( $a_parameternames as $name )

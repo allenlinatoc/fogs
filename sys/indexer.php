@@ -66,9 +66,19 @@ class Index {
         return;
     }
 
-    public static function __GetPage() {
+    /**
+     * Gets the current page
+     * @param type $is_tolower
+     * @return type
+     */
+    public static function __GetPage($is_tolower=null) {
+        $page = self::$DEFAULT_PAGE;
         if (!array_key_exists('page', $_GET)) {
-            return self::$DEFAULT_PAGE;
+            return $page;
+        }
+        if ($is_tolower!==null)
+        {
+            $page = $is_tolower ? strtolower($page) : strtoupper($page);
         }
         return $_GET ['page'];
     }

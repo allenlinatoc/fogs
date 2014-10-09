@@ -1,43 +1,39 @@
-<div class="container">
-    <div class="container-fluid jumbotron" role="main">
+<br>
+<br>
+<h4 align="center">Welcome to FAITH Online Grading System</h4>
+<br>
+<div align="center" class="row-fluid">
+    <br>
+    <form role="form" method="post">
         <br>
-        <br>
-        <h4 align="center">Welcome to FAITH Online Grading System</h4>
-        <br>
-        <div align="center" class="row-fluid">
-            <br>
-            <form role="form" method="post">
-                <br>
-                <div class="input-group center col-lg-7 col-md-7">
-                    <span class="input-group-addon">Username</span>
-                    <input 
-                        type=           "text"
-                        name=           "postUsername"
-                        class=          "form-control" 
-                        maxlength=      "30" 
-                        placeholder=    "Username here" 
-                        required=       "required"
-                        value=          "<?php echo $postUsername ?>"
-                        autocomplete>
-                </div>
-                <br>
-                <div class="input-group center col-lg-7 col-md-7">
-                    <span class="input-group-addon">Password</span>
-                    <input
-                        type=           "password"
-                        name=           "postPassword"
-                        class=          "form-control"
-                        maxlength=      "75"
-                        placeholder=    "Your password"
-                        required=       "required"
-                    >
-                </div>
-                <br>
-                <div class="row btn-group" align="center">
-                    <input type="submit" class="btn btn-primary" name="postType" value="Login">
-                    <input type="submit" class="btn btn-warning" name="postType" value="Register">
-                </div>
-            </form>
+        <div class="input-group center col-lg-7 col-md-7">
+            <span class="input-group-addon">Username</span>
+            <input 
+                type=           "text"
+                name=           "postUsername"
+                class=          "form-control" 
+                maxlength=      "30" 
+                placeholder=    "Username here" 
+                required=       "required"
+                value=          "<?php echo $postUsername ?>"
+                autocomplete>
         </div>
-    </div>
+        <br>
+        <div class="input-group center col-lg-7 col-md-7">
+            <span class="input-group-addon">Password</span>
+            <input
+                type=           "password"
+                name=           "postPassword"
+                class=          "form-control"
+                maxlength=      "75"
+                placeholder=    "Your password"
+                required=       "required"
+                >
+        </div>
+        <br>
+        <div class="row btn-group" align="center">
+            <input type="submit" class="btn btn-primary" name="postType" value="Login">
+            <input type="submit" class="btn btn-warning" name="postType" value="Register">
+        </div>
+    </form>
 </div>

@@ -5,7 +5,7 @@ if (DATA::__IsPassageOpen()) {
     #
     if ( !DATA::__HasIntentData('DIALOG_OBJECT')
             && (DATA::__HasIntentData('DIALOG_OBJECT') ? !is_object(DATA::__GetIntent('DIALOG_OBJECT')) : true) ) {
-        FLASH::addFlash('You tried to enter an unauthorized page.', 
+        FLASH::AddFlash('You tried to enter an unauthorized page.', 
                 [Index::$DEFAULT_PAGE],
             'ERROR', TRUE);
         UI::RedirectTo(Index::$DEFAULT_PAGE);

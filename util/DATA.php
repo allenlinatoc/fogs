@@ -399,7 +399,7 @@ final class DATA {
         // Check first if Passage Gate is open, otherwise, supplied $_GET data should be malicious!
         if (!self::__IsPassageOpen()) {
             $redirectpage = is_null($str_redirectpage) ? Index::$DEFAULT_PAGE : trim($str_redirectpage);
-            FLASH::addFlash('Woah, unauthorized data supplied in page <b>' . Index::__GetPage() . '</b>, '
+            FLASH::AddFlash('Woah, unauthorized data supplied in page <b>' . Index::__GetPage() . '</b>, '
                     . 'and we just fixed the error for you ;)',
                     [
                         'admin-home', 'home', 'user-home'
@@ -415,7 +415,7 @@ final class DATA {
                 } else if (count($a_keyslist) > 0 ? !key_exists(key($_GET), $a_keyslist) : false) {
                     if (!is_null($str_redirectpage)) {
                         $redirectpage = trim($str_redirectpage);
-                        FLASH::addFlash('Non qualified data was accidentally supplied in page <b>' . Index::__GetPage() . '</b> '
+                        FLASH::AddFlash('Non qualified data was accidentally supplied in page <b>' . Index::__GetPage() . '</b> '
                                 . 'but don\'t worry, geeks are on the way to fix it.',
                                 [
                                     'admin-home', 'home', 'user-home'
