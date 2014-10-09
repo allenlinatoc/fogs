@@ -15,7 +15,7 @@ class PARAMS
     /**
      * Self page indication
      */
-    const PAGE_SELF = '^^^';
+    const PAGE_SELF = '1';
     
     
     
