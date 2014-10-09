@@ -9,13 +9,13 @@
 <div class="row-fluid" id="form_student">
     <div class="panel panel-primary no-margin">
         <div class="panel-heading">
-            <span class="panel-title"><?php echo $formTitle ?></span>
+            <span class="panel-title"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;<?php echo $formTitle ?></span>
         </div>
         <div class="panel-body">
             <form method="post" role="form">
                 <h4><label class="label label-default">Student name</label></h4>
                 <div class="input-group">
-                    <input type="text" name="postStudentname" class="form-control" maxlength="150" value="<?php echo $postStudentname ?>" autofocus>
+                    <input type="text" name="postStudentname" class="form-control" maxlength="150" value="<?php echo $postStudentname ?>" autofocus required>
                     <span class="input-group-btn">
                         <?php
                         UI::Button( ($MODE=='EDIT' ? 'Save':'Submit'), 'submit', 'btn btn-primary');
