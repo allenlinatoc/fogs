@@ -1,20 +1,22 @@
 <?php
-    $homeclass = Index::__GetPage()=='home' ? 'active':'';
+    $home_class = Index::__GetPage()=='userhome' ? 'active':'';
+    $students_class = Index::__GetPage()=='manage-students' ? 'active':'';
 ?>
 
 
 <div class="navbar-collapse collapse" style="height: 1px;">
     <ul class="nav navbar-nav navbar-right">
-        <li class="<?php echo ((Index::__GetPage()=='home'||Index::__GetPage()=='user-home') ? 'active':'') ?>">
+        <li class="<?php echo $home_class; ?>">
             <a class="<?php  ?>" href="<?php echo UI::GetPageUrl('home') ?>">Home</a></li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">My courses <span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default">
-                <li><a href="subject-form">Create subject</a></li>
+                <li><a href="<?php echo UI::GetPageUrl('manage-courses') ?>">Create course</a></li>
                 <li class="divider"></li>
-                <li class="dropdown-header">No subjects</li>
+                <li class="dropdown-header">No existing course</li>
             </ul>
         </li>
-        <li><a href="#students">My students</a></li>
+        <li class="<?php echo $students_class ?>">
+            <a href="<?php echo UI::GetPageUrl('manage-students') ?>">My students</a></li>
     </ul>
 </div><!--/.nav-collapse -->
