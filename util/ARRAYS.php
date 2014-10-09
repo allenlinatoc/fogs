@@ -74,5 +74,33 @@ final class ARRAYS {
         }
     }
     
+    /**
+     * Returns if specified value exists in an array
+     * @param mixed $needle The value to find
+     * @param Array|Array-assoc $haystack The array to be searched
+     * @param boolean $is_strict [false] If strict data-type comparison should also be applied
+     * @return boolean
+     */
+    public static function __HasValue($needle, $haystack, $is_strict=false)
+    {
+        foreach ($haystack as $hay)
+        {
+            if (is_array($hay) )
+            {
+                $hasvalue = self::__HasValue($needle, $hay);
+                if ( $hasvalue ) {
+                    return true;
+                }
+            }
+            else {
+                if ($is_strict ? $hay===$needle : $hay==$needle)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     
 }
