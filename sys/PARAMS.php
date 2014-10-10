@@ -404,6 +404,17 @@ class PARAMS
         return false;
     }
     
+    /**
+     * Check if this page has parameters (revised version of __HasParameters method)
+     * @param Array $a_parameternames [array()] 
+     * @param string $page [PAGE_GLOBAL]
+     * @return boolean
+     */
+    public static function __HasParams($a_parameternames=array(), $page=self::PAGE_GLOBAL)
+    {
+        return self::__HasParameters($page, $a_parameternames);
+    }
+    
     public static function __PrintParams($is_includepageparams=false)
     {
         echo '<hr>';
