@@ -139,9 +139,10 @@ class UI {
      */
     public static function Divbox($options=array(), $innerhtml=null, $return=false) {
         $html = '<div ';
-        do {
-            $html .= key($options) . '="' . current($options) . '" ';
-        } while(next($options));
+        for ( $x=0,reset($options); $x<count($options); $x++,  next($options) )
+        {
+            $html .= key($options) .'="'.current($options).'" ';
+        }
         $html = trim($html) . '>';
         if (!is_null($innerhtml)) {
             $html .= $innerhtml;
