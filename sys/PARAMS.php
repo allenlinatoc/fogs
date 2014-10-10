@@ -76,8 +76,10 @@ class PARAMS
                 $value = current($_SESSION[$paramKey]);
                 if ($value['name']===$paramName)
                 {
-                    unset($_SESSION[$paramKey][key($_SESSION[$paramKey])]);
-                    break;
+                    while ( isset($_SESSION[$paramKey][key($_SESSION[$paramKey])]) ) {
+                        // notorious deletion
+                        unset($_SESSION[$paramKey][key($_SESSION[$paramKey])]);
+                    }
                 }
             }
             if (is_array($_SESSION[$paramKey])) {
