@@ -363,6 +363,25 @@ class DB {
 
     # Static functions ---------------------------------------------------------
 
+    public static function __exists($tablename, $a_specifications=array())
+    {
+        $sql = new DB();
+        $sql
+                ->Select([1])
+                ->From($tablename);
+        
+        // build where string
+        if ( count($a_specifications)>0 )
+        {
+            $str_where = '';
+            for ($x=0; $x<count($a_specifications); $x++) {
+                $str_where .= $a_specifications[$x] . ($x < count($a_specifications)-1 ? ' AND ' : '');
+            }
+            $sql->Where($str_where);
+        }
+        return count($sql->Query()) > 0;
+    }
+    
     /**
      * Returns the row count of given query specification
      * @param string $tablename Table name
