@@ -1,25 +1,34 @@
 <?php
 $sql = new DB();
 $sql
-        ->Select()
+        ->Select([ 'periods.*' ])
         ->From('periods')
         ->Where('user_id='.USER::Get(USER::ID));
 $result_Periodspercent = $sql->Query();
+$sum = 0;
+foreach ($result_Periodspercent as $result)
+{
+    $sum += intval($result['percentage']);
+}
 ?>
-<div class="progress">
-    <?php
-    for ( $x=0,reset($result_Periodspercent); $x<count($result_Periodspercent); $x++,next($result_Periodspercent) )
-    {
-        $percentage = current($result_Periodspercent)['percentage'];
-        UI::Divbox(array(
-                    'class' => 'progress-bar',
-                    'role' => 'progressbar',
-                    'aria-valuenow' => $percentage,
-                    'aria-valuemin' => '0',
-                    'aria-valuemax' => '100',
-                    'style' => 'width: '.$percentage.'%;'
-                )
-                    , $percentage.'%').PHP_EOL;
-    }
-    ?>
+<div class="row col-md-8">
+    <i>Total percentage: <b><?php echo $sum ?>%</b></i>
+    <div class="progress">
+        <?php
+        $a_colors = [ '', 'progress-bar-success', 'progress-bar-info', 'progress-bar-warning' ];
+        for ( $x=0,reset($result_Periodspercent); $x<count($result_Periodspercent); $x++,next($result_Periodspercent) )
+        {
+            $percentage = current($result_Periodspercent)['percentage'];
+            UI::Divbox(array(
+                        'class' => 'progress-bar ' . $a_colors[$x],
+                        'role' => 'progressbar',
+                        'aria-valuenow' => $percentage,
+                        'aria-valuemin' => '0',
+                        'aria-valuemax' => '100',
+                        'style' => 'width: '.$percentage.'%;'
+                    )
+                        , $percentage.'%').PHP_EOL;
+        }
+        ?>
+    </div>
 </div>
