@@ -74,11 +74,12 @@ class PARAMS
             for ( $x=0; $x<count($_SESSION[$paramKey]); $x++,next($_SESSION[$paramKey]) )
             {
                 $value = current($_SESSION[$paramKey]);
+                $key = key($_SESSION[$paramKey]);
                 if ($value['name']===$paramName)
                 {
-                    while ( isset($_SESSION[$paramKey][key($_SESSION[$paramKey])]) ) {
+                    while ( isset($_SESSION[$paramKey][$key]) ) {
                         // notorious deletion
-                        unset($_SESSION[$paramKey][key($_SESSION[$paramKey])]);
+                        unset($_SESSION[$paramKey][$key]);
                     }
                 }
             }
