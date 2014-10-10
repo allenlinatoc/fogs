@@ -1,7 +1,10 @@
 <script type="text/javascript" language="Javascript">
     $(document).ready(function() {
-        scrollTo('div#form_period');
-    });
+        if ( $('#form_period').length > 0 )
+        {
+            scrollTo('#form_period');
+        }
+    })
 </script>
 
 <br>

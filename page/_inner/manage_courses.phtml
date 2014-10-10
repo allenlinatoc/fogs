@@ -1,7 +1,10 @@
 <script type="text/javascript" language="Javascript">
     $(document).ready(function() {
-        scrollTo('div#panel_course');
-    });
+        if ( $('div#panel_course').length > 0 )
+        {
+            scrollTo('div#panel_course');
+        }
+    })
 </script>
 
 <br>
