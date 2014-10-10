@@ -163,7 +163,11 @@ $report_Courses
                 'CAPTION' => 'hidden_ID',
                 'HIDDEN' => true
             ], [
-                'CAPTION' => 'Course name'
+                'CAPTION' => 'hidden_COURSE',
+                'HIDDEN' => true
+            ], [
+                'CAPTION' => 'Course name',
+                'DEFAULT' => UI::makeLink(UI::GetPageUrl('course', [ 'COURSE_ID'=>'{1}' ]), '{2}', true)
             ], [
                 'CAPTION' => 'Actions',
                 'DEFAULT' =>
@@ -182,7 +186,7 @@ $report_Courses
             ]
         ))
         ->setReportCellstemplate(array(
-            [], [], []
+            [], [], [], []
         ))
         ->loadResultdata($result)
         ->defineEmptyMessage('No existing courses yet');

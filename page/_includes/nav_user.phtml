@@ -12,10 +12,31 @@
         <li class="dropdown<?php echo $courses_class ?>">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">My courses <span class="caret"></span></a>
             <ul class="dropdown-menu navbar-default">
-                <li><a href="<?php echo UI::GetPageUrl('course-form') ?>">Create course</a></li>
+                <li><a href="<?php echo UI::GetPageUrl('manage-courses', [ 'MODE'=>'ADD' ]) ?>">Create course</a></li>
                 <li><a href="<?php echo UI::GetPageUrl('manage-courses') ?>">Manage courses</a></li>
                 <li class="divider"></li>
-                <li class="dropdown-header">No existing course</li>
+                <?php
+                $sql = new DB();
+                $sql
+                        ->Select([ 'id', 'name' ])
+                        ->From('courses')
+                        ->Where('user_id='.USER::Get(USER::ID));
+                $result = $sql->Query();
+                if ( count($result)==0 )
+                {
+                    echo '<li class="dropdown-header">No existing course</li>';
+                }
+                else {
+                    foreach ( $result as $row )
+                    {
+                        $courseName = STR::Limit($row['name'], 30);
+                        echo '<li><a href="'.UI::GetPageUrl('course'
+                                , array(
+                                    'COURSE_ID' => $row['id']
+                                )).'">'.$courseName.'</a></li>';
+                    }
+                }
+                ?>
             </ul>
         </li>
         <li class="<?php echo $students_class ?>">

@@ -38,7 +38,11 @@ if ( DATA::__HasPostData('postStudentname') )
     {
         // verify existence
         $sql = new DB();
-        $exists = $sql->__getRowCount('students', array('fullname="'.$postStudentname.'"')) > 0;
+        $exists = $sql->__getRowCount('students'
+                , array(
+                    'fullname="'.$postStudentname.'"',
+                    'user_id='.USER::Get(USER::ID)
+                )) > 0;
         if ( $exists )
         {
             FLASH::AddFlash('This student already exists', Index::__GetPage(), FLASH::ERROR);
@@ -136,7 +140,7 @@ else if ( $MODE=='REQ_DELETE' )
     {
         $dialog = new DIALOG('Confirm deletion of student');
         $dialog
-                ->SetMessage('Are you sure you want to delete')
+                ->SetMessage('Are you sure you want to delete student entry of '.$postStudentname)
                 ->SetPageCallback(Index::__GetPage())
                 ->AddButton(DIALOG::B_YES)
                 ->AddButton(DIALOG::B_NO)
