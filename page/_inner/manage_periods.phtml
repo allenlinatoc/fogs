@@ -3,6 +3,7 @@
         scrollTo('div#form_period');
     });
 </script>
+
 <br>
 <br>
 <?php
@@ -11,7 +12,6 @@ require 'page/_includes/panel_header.phtml';
 ?>
 <hr class="hr-default">
 <?php
-
 if ( $MODE!=='ADD' && $MODE!=='EDIT' )
 {
     UI::Divbox(array(
@@ -20,7 +20,7 @@ if ( $MODE!=='ADD' && $MODE!=='EDIT' )
     UI::NewLine();
     $buttonAddClass = $countPeriods < 4 ? '':' disabled';
     UI::Button('Add grading period', 'button', 'btn btn-primary'.$buttonAddClass
-            , ($countPeriods > 4 ? UI::GetPageUrl(Index::__GetPage()
+            , ($countPeriods < 4 ? UI::GetPageUrl(Index::__GetPage()
                     , array(
                         'MODE' => 'ADD'
                     )) : ''));
@@ -40,7 +40,11 @@ else
     </div>
     <div class="panel-body">
         <?php
+        // generate report
         $report_Periods->renderReport();
+        
+        // include statistical sumation bar
+        require 'page/_includes/e_periodspercent.phtml';
         ?>
     </div>
 </div>
