@@ -210,9 +210,9 @@ class Index {
         {
             $HEADER_title = $PAGE_TITLES[$this->__GetPage()];
         }
-        if ( self::__GetPage()==DIALOG::DIALOG_PAGENAME && DATA::__HasIntentData('DIALOG_OBJECT') )
+        if ( self::__GetPage()==DIALOG::DIALOG_PAGENAME && PARAMS::__HasParameters(DIALOG::DIALOG_PAGENAME, [ 'DIALOG_OBJECT' ]) )
         {
-            $dialogObj = DIALOG::ToDialog(DATA::__GetIntent('DIALOG_OBJECT'));
+            $dialogObj = DIALOG::ToDialog(PARAMS::Get('DIALOG_OBJECT', DIALOG::DIALOG_PAGENAME));
             $HEADER_title = $dialogObj->DialogTitle;
         }
         PARAMS::Create('header_title', $HEADER_title);
