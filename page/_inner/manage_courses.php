@@ -95,7 +95,7 @@ if ( $MODE=='REQ_CANCEL' )
     FLASH::clearFlashes();
     UI::RefreshPage();
 }
-else if ( $MODE=='EDIT' )
+else if ( $MODE=='EDIT' && !DATA::__HasPostData('postCoursename') )
 {
     // edit
     $postCoursename = $courseName;

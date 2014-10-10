@@ -1,0 +1,43 @@
+<?php
+$panel_title = ($MODE=='ADD' || $MODE===null) ? 'New':'Edit';
+
+?>
+
+<div class="panel panel-primary" id="form_period">
+    <div class="panel-heading">
+        <span class="panel-title">
+            <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;<?php echo $panel_title ?> grading period
+        </span>
+    </div>
+    <div class="panel-body">
+        <form method="post" role="form">
+            <div class="input-group">
+                <span class="input-group-addon">Period name</span>
+                <input type="text" name="postPeriodname" class="form-control" maxlength="20" value="<?php echo $postPeriodname ?>" required autofocus>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-5 col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-addon">Percentage</span>
+                        <input type="number" name="postPercentage" class="form-control" max="99" min="10" value="<?php echo $postPercentage ?>" required>
+                        <span class="input-group-addon">%</span>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div align="right">
+                <div class="btn-group container-fluid">
+                    <?php
+                    UI::Button('Submit', 'submit', 'btn btn-primary');
+                    UI::Button('Cancel', 'button', 'btn btn-danger'
+                            , UI::GetPageUrl(Index::__GetPage()
+                                    , array(
+                                        'MODE' => 'REQ_CANCEL'
+                                    )));
+                    ?>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

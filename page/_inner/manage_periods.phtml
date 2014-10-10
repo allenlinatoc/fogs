@@ -1,3 +1,8 @@
+<script type="text/javascript" language="Javascript">
+    $(document).ready(function() {
+        scrollTo('div#form_period');
+    });
+</script>
 <br>
 <br>
 <?php
@@ -5,3 +10,37 @@ define('PANEL_TITLE', 'Grading periods');
 require 'page/_includes/panel_header.phtml';
 ?>
 <hr class="hr-default">
+<?php
+
+if ( $MODE!=='ADD' && $MODE!=='EDIT' )
+{
+    UI::Divbox(array(
+        'class' => 'row-fluid'
+    ), '<i>You can only add up to <b>4</b> grading periods</i>');
+    UI::NewLine();
+    $buttonAddClass = $countPeriods < 4 ? '':' disabled';
+    UI::Button('Add grading period', 'button', 'btn btn-primary'.$buttonAddClass
+            , ($countPeriods > 4 ? UI::GetPageUrl(Index::__GetPage()
+                    , array(
+                        'MODE' => 'ADD'
+                    )) : ''));
+}
+else
+{
+    require 'page/_includes/form_period.phtml';
+}
+?>
+<hr class="hr-default">
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <span class="panel-title">
+            <span class="glyphicon glyphicon-book"></span>
+            &nbsp;&nbsp;&nbsp;Grading periods
+        </span>
+    </div>
+    <div class="panel-body">
+        <?php
+        $report_Periods->renderReport();
+        ?>
+    </div>
+</div>
