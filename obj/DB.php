@@ -226,6 +226,13 @@ class DB {
         return $this;
     }
     
+    public function NotIn($str_query)
+    {
+        $this->query .= 'NOT IN '.$str_query;
+        $this->__trailspaceQuery();
+        return $this;
+    }
+    
     /**
      * ON certain condition
      * @param String $str_condition String containing conditional comparison
