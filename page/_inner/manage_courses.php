@@ -28,7 +28,8 @@ if ( DATA::__HasPostData('postCoursename') )
         $sql = new DB();
         $exists = $sql->__getRowCount('courses'
                 , array(
-                    'name LIKE "'.$postCoursename.'"'
+                    'name LIKE "'.$postCoursename.'"',
+                    'user_id='.USER::Get(USER::ID)
                 )) > 0;
         if ($exists)
         {
