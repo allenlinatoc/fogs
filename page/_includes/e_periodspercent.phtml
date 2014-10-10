@@ -1,0 +1,25 @@
+<?php
+$sql = new DB();
+$sql
+        ->Select()
+        ->From('periods')
+        ->Where('user_id='.USER::Get(USER::ID));
+$result_Periodspercent = $sql->Query();
+?>
+<div class="progress">
+    <?php
+    for ( $x=0,reset($result_Periodspercent); $x<count($result_Periodspercent); $x++,next($result_Periodspercent) )
+    {
+        $percentage = current($result_Periodspercent)['percentage'];
+        UI::Divbox(array(
+                    'class' => 'progress-bar',
+                    'role' => 'progressbar',
+                    'aria-valuenow' => $percentage,
+                    'aria-valuemin' => '0',
+                    'aria-valuemax' => '100',
+                    'style' => 'width: '.$percentage.'%;'
+                )
+                    , $percentage.'%').PHP_EOL;
+    }
+    ?>
+</div>
