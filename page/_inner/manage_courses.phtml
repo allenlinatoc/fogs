@@ -1,2 +1,39 @@
+<script type="text/javascript" language="Javascript">
+    $(document).ready(function() {
+        scrollTo('div#panel_course');
+    });
+</script>
+
 <br>
 <br>
+<?php
+define('PANEL_TITLE', 'My courses');
+require 'page/_includes/panel_header.phtml';
+?>
+
+<hr class="hr-default">
+<?php
+if ( $MODE!=='ADD' && $MODE!='EDIT' )
+{
+    UI::Button('Create course', 'button', 'btn btn-primary'
+            , UI::GetPageUrl(Index::__GetPage()
+                    , array(
+                        'MODE' => 'ADD'
+                    )));
+}
+else
+{
+    require 'page/_includes/form_course.phtml';
+}
+?>
+<hr class="hr-default">
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <span class="panel-title"><span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;&nbsp;My courses</span>
+    </div>
+    <div class="panel-body">
+        <?php
+        $report_Courses->renderReport();
+        ?>
+    </div>
+</div>

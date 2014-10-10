@@ -1,6 +1,8 @@
 <div class="panel panel-primary" id="panel_course">
     <div class="panel-heading">
-        <span class="panel-title"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;&nbsp;My courses</span>
+        <span class="panel-title"><span class="glyphicon glyphicon-pencil"></span>
+            &nbsp;&nbsp;&nbsp;<?php echo $MODE=='ADD' ? 'Create course':'Edit course' ?>
+        </span>
     </div>
     <div class="panel-body">
         <form method="post" role="form">
@@ -9,7 +11,7 @@
                 <input type="text" name="postCoursename" class="form-control" maxlength="50" value="<?php echo $postCoursename ?>" required autofocus>
                 <span class="input-group-btn">
                     <?php
-                    UI::Button('Submit', 'submit', 'btn btn-primary');
+                    UI::Button(($MODE=='ADD'?'Submit':'Save'), 'submit', 'btn btn-primary');
                     UI::Button('Cancel', 'button', 'btn btn-danger'
                             , UI::GetPageUrl(Index::__GetPage()
                                     , array(

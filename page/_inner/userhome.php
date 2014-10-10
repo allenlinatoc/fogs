@@ -9,7 +9,7 @@ $count = $sql->__getRowCount('students');
 $count_Students = $count > 0 ? $count : '';
 
 $sql = new DB();
-$count = $sql->__getRowCount('students');
+$count = $sql->__getRowCount('courses');
 $count_Courses = $count > 0 ? $count : '';
 
 ?>
