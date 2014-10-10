@@ -1,0 +1,53 @@
+<?php
+/**
+ * REQUIREMENTS
+ *  (1) COURSE_ID
+ *  (2) MODE
+ *  (3) TARGET_ID
+ */
+
+$panel_title = MODE==='EDIT-GCOMPONENT' ? 'Edit':'Add';
+$btnSubmit_caption = MODE==='EDIT-GCOMPONENT' ? 'Save':'Submit';
+?>
+
+
+<div class="row-fluid">
+ 
+    <div class="panel panel-primary" id="form_addstudents">
+        <div class="panel-heading">
+            <span class="panel-title">
+                <span class="glyphicon glyphicon-pencil"></span>
+                &nbsp;<?php echo $panel_title ?> component
+            </span>
+        </div>
+        <div class="panel-body" align="center">
+            <div class="col-lg-7 col-md-7 col-sm-7">
+                <form method="post" role="form">
+                    <div class="input-group">
+                        <span class="input-group-addon">Name</span>
+                        <input type="text" name="postGcname" maxlength="50" class="form-control" autofocus required
+                               value="<?php echo $postGcname ?>">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Percentage</span>
+                        <input type="number" name="postGcpercentage" min="1" max="99" class="form-control"
+                               value="<?php echo $postGcpercentage ?>" required>
+                        <span class="input-group-addon">%</span>
+                    </div>
+                    <br>
+                    <div class="btn-group">
+                        <?php
+                        UI::Button('Submit', 'submit', 'btn btn-primary btn-sm');
+                        UI::Button('Cancel', 'button', 'btn btn-danger btn-sm'
+                                , UI::GetPageUrl(Index::__GetPage()
+                                        , array(
+                                            'MODE' => 'RESETMODE'
+                                        )));
+                        ?>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

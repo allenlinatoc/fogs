@@ -1,0 +1,87 @@
+<?php
+// [ START ] Back-end
+/*
+ * REQUIREMENTS:
+ *  (1) Constant 'COURSE_ID'
+ */
+
+$sql_Student_Course = new DB();
+$sql_Student_Course
+        ->Select(['student_id'])
+        ->From('d_student_course')
+        ->Where('course_id='.COURSE_ID);
+$sql = new DB();
+$sql
+        ->Select([ 'id','fullname' ])
+        ->From('students')
+        ->Where('id NOT IN ('.$sql_Student_Course->query.') '
+                . 'AND user_id='.USER::Get(USER::ID));
+
+$resultx = $sql->Query();
+$report_StudentsNotInList = new MySQLReport();
+$report_StudentsNotInList
+        ->setReportProperties(array(
+            'width' => '100%',
+            'class' => 'table'
+        ))
+        ->setReportHeaders(array(
+            [
+                'CAPTION' => 'hidden_ID',
+                'HIDDEN' => true
+            ], [
+                'CAPTION' => 'hidden_FULLNAME',
+                'HIDDEN' => true
+            ], [
+                'CAPTION' => 'Select',
+                'DEFAULT' => 
+                    '<input type="checkbox" name="postStudentIds[]" id="c{1}" class="form-control checkbox" value="{1}">',
+                'width' => '10%'
+            ], [
+                'CAPTION' => 'Student',
+                'DEFAULT' =>
+                    '<div class="row-fluid" style="vertical-align:middle">'
+                  . '<label class="btn btn-success form-control" for="c{1}">{2}</label>'
+                  . '</div>',
+                'width' => '90%'
+            ]
+        ))
+        ->setReportCellstemplate(array(
+            [], [], [], []
+        ))
+        ->loadResultdata($resultx)
+        ->defineEmptyMessage('No one from your student/s is currenty available to be added here.');
+
+
+// [ END ] Back-end
+?>
+
+
+<div class="row-fluid">
+ 
+    <div class="panel panel-primary" id="form_addstudents">
+        <div class="panel-heading">
+            <span class="panel-title">
+                <span class="glyphicon glyphicon-pencil"></span>
+                &nbsp;Add students to this course
+            </span>
+        </div>
+        <div class="panel-body" align="center">
+            <div class="col-lg-7 col-md-7 col-sm-7">
+                <form method="post" role="form">
+                    <?php
+                    $report_StudentsNotInList->renderReport();
+                    UI::HorizontalLine();
+                    if ( count($resultx)>0 ) {
+                        UI::Button('Submit', 'submit', 'btn btn-primary');
+                    }
+                    UI::Button('Cancel', 'button', 'btn btn-danger'
+                            , UI::GetPageUrl(Index::__GetPage()
+                                    , array(
+                                        'MODE' => 'RESETMODE'
+                                    )));
+                    ?>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

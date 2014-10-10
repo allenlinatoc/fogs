@@ -1,8 +1,93 @@
+<script type="text/javascript" language="Javascript">
+    $(document).ready(function() {
+        if ( $('#form_addstudents').length > 0 )
+        {
+            scrollTo('#form_addstudents');
+        }
+    });
+</script>
+
 <br>
 <br>
-Viewing course...
+<!-- Button "Go back to My Courses list" -->
+<button class="btn btn-default" 
+          onclick="javascript:window.location='<?php
+            echo UI::GetPageUrl('manage-courses')
+          ?>'">
+    <span class="glyphicon glyphicon-arrow-left"></span>
+    &nbsp;
+    Go back to My Courses list
+</button>
+
 <?php
+
 define('PANEL_TITLE', '<i>'.$COURSE_INFO['name'].'</i>');
 require 'page/_includes/panel_header.phtml';
 ?>
 <hr class="hr-default">
+
+<!-- "form_course_addstudents.phtml" form will automatically show here -->
+<?php
+if ( $MODE==='ADD-STUDENT' )
+{
+    define('COURSE_ID', $COURSE_ID);
+    require 'page/_includes/form_course_addstudents.phtml';
+}
+else if ( $MODE==='ADD-GCOMPONENT' || $MODE==='EDIT-GCOMPONENT' )
+{
+    define('COURSE_ID', $COURSE_ID);
+    define('TARGET_ID', $TARGET_ID);
+    define('MODE', $MODE);
+    require 'page/_includes/form_course_addcomponent.phtml';
+}
+?>
+
+<div class="row">
+    <div class="col-lg-6 col-md-6">
+        <!-- REPORT: Enrolled students -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="panel-title">
+                    <span class="glyphicon glyphicon-user"></span>
+                    &nbsp;Enrolled students
+                </span>
+            </div>
+            <div class="panel-body">
+                <?php // button controls
+                UI::Button('Add student to list', 'button', 'btn btn-primary btn-sm'
+                        , UI::GetPageUrl(Index::__GetPage()
+                                , array(
+                                    'MODE' => 'ADD-STUDENT'
+                                )));
+                ?>
+                <hr class="hr-default">
+                <!-- reports here -->
+                <?php
+                $report_StudentsList->renderReport();
+                ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6">
+        <!-- REPORT: Enrolled students -->
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="panel-title">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    &nbsp;Grading components
+                </span>
+            </div>
+            <div class="panel-body">
+                <?php
+                UI::Button('Add component', 'button', 'btn btn-primary btn-sm'
+                        , UI::GetPageUrl(Index::__GetPage()
+                                , array(
+                                    'MODE' => 'ADD-GCOMPONENT'
+                                )));
+                echo '<hr class="hr-default">';
+                $report_GradingComponents->renderReport();
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
